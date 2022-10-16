@@ -20,7 +20,7 @@ function App() {
     if (profitOrLoss !== 0) {
       text = `Hey, the ${profitOrLoss > 0 ? "profit": "loss"} is ${Math.abs(profitOrLoss)} and percent is ${(Math.abs(profitOrLoss)/initialPrice)*100}%`;
     } else {
-      text = 'No pain no gain!';
+      text = 'No pain no gain and no gain no pain!';
     }
 
     refElem.current.innerHTML = text;
