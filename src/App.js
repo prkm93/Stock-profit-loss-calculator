@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Input from "./components/Input";
 
 function App() {
@@ -7,6 +7,24 @@ function App() {
   const [qtyOfStocks, setQtyOfStocks] = useState('');
   const [currentPrice, setCurrentPrice] = useState('');
 
+  const refElem = useRef();
+
+  const calculateAmount = (e) => {
+    e.preventDefault();
+
+    const profitOrLoss = (+currentPrice)*(+qtyOfStocks) - (+initialPrice)*(+qtyOfStocks);
+    console.log("profitOrLoss", profitOrLoss);
+
+    let text;
+
+    if (profitOrLoss !== 0) {
+      text = `Hey, the ${profitOrLoss > 0 ? "profit": "loss"} is ${Math.abs(profitOrLoss)} and percent is ${(Math.abs(profitOrLoss)/initialPrice)*100}%`;
+    } else {
+      text = 'No pain no gain!';
+    }
+
+    refElem.current.innerHTML = text;
+  }
 
   return (
     <div className="container">
@@ -14,7 +32,7 @@ function App() {
       <Input
         label="Initial Price"
         id="price"
-        placeholder="Enter Initial Price"
+        placeholder="Enter initial price"
         value={initialPrice}
         onChange={setInitialPrice}
       />
@@ -32,7 +50,13 @@ function App() {
         value={currentPrice}
         onChange={setCurrentPrice}
       />
-      <button className="btn">Tell me!</button>
+      <button 
+        className="btn" 
+        onClick={calculateAmount}
+      >
+        Tell me!
+      </button>
+      <div ref={refElem} className="output"></div>
     </div>
   );
 }
